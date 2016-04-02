@@ -20,12 +20,10 @@ Current features include:
 
 **Note: This is still in developement.** If it takes away items that it was not supposed to, submit a ticket containing the number of each material you were crafting (as close to exact as possible) and I will attempt to fix it as soon as possible.
 
-[](#Version)
-### **Version**
+<h3 id="Version"><b>Version</b></h3>
 1.1.0 beta
 
-[](#Screenshots)
-### **Screenshots**
+<h3 id="Screenshots"><b>Screenshots</b></h3>
 ![](http://imgur.com/KMcvbO5.png)
 
 Main Screen
@@ -34,7 +32,6 @@ Main Screen
 
 Confirmation Screen
 
-[](#Usage)
 <h3 id="Usage"><b>Usage</b></h3>
 
 To start, go to the crafting station and navigate to the Material Conversion tab (the last one).
@@ -51,12 +48,10 @@ Finally, ensure that The Division looks like the first picture, such that the Hi
 
 Assuming this is correct, press ok and reselect The Division's window. After three seconds, the program will start crafting.
 
-[](#Development)
-### **Development**
+<h3 id="Development"><b>Development</b></h3>
 
 The source code for this application is written in [Autohotkey](https://www.autohotkey.com).
 
-[](#License)
-### **License**
+<h3 id="License"><b>License</b></h3>
 
 What license, do what ever you want. If you think it's cool, feel free to send me a message.
