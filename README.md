@@ -12,7 +12,7 @@ Current features include:
 **Note: This is still in development.** If it takes away items that it was not supposed to, submit a ticket containing the number of each material you were crafting (as close to exact as possible) and I will attempt to fix it as soon as possible.
 
 ### Version
-1.0.0 beta
+1.1.0 beta
 
 ### Usage
 
