@@ -2,6 +2,13 @@
 
 ### [Latest Release](https://github.com/kylewill0725/DivisionCraftingHelper/releases/latest)
 
+###Table of Contents
+- [Version](#Version)
+- [Screenshots](#Screenshots)
+- [Usage](#Usage)
+- [Development](#Development)
+- [License](#License)
+
 The Division Crafting Helper is a program written in Autohotkey that sends keyboard commands to The Divsion in order to automatically upgrade your materials to High End. So take a break, and let this program upgrade those materials.
 
 Current features include:
@@ -13,16 +20,21 @@ Current features include:
 
 **Note: This is still in developement.** If it takes away items that it was not supposed to, submit a ticket containing the number of each material you were crafting (as close to exact as possible) and I will attempt to fix it as soon as possible.
 
+[](#Version)
 ### **Version**
 1.1.0 beta
 
+[](#Screenshots)
 ### **Screenshots**
 ![](http://imgur.com/KMcvbO5.png)
+
 Main Screen
 
 ![](http://imgur.com/a1aQfIZ.png)
+
 Confirmation Screen
 
+[](#Usage)
 ### **Usage**
 
 To start, go to the crafting station and navigate to the Material Conversion tab (the last one).
@@ -39,10 +51,12 @@ Finally, ensure that The Division looks like the first picture, such that the Hi
 
 Assuming this is correct, press ok and reselect The Division's window. After three seconds, the program will start crafting.
 
+[](#Development)
 ### **Development**
 
 The source code for this application is written in [Autohotkey](https://www.autohotkey.com).
 
+[](#License)
 ### **License**
 
 What license, do what ever you want. If you think it's cool, feel free to send me a message.
