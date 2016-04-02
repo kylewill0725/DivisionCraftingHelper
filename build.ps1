@@ -3,7 +3,7 @@
 [int]$bug = 0
 
 Get-ChildItem .\build -Filter *.exe | ForEach-Object {
-    
+
     if ($_ -match '(?<=_)[^\-]*(?=-.*-.*.exe)' -and $matches[0] -as [int] -gt $major) { $major = $matches[0] -as [int] }
     if ($_ -match '(?<=-)[^\-]*(?=-.*.exe)' -and $matches[0] -as [int] -gt $minor) { $minor = $matches[0] -as [int] }
     if ($_ -match '(?<=-)[^\-]*(?=.exe)' -and $matches[0] -as [int] -gt $bug) { $bug = $matches[0] -as [int] }
@@ -15,11 +15,14 @@ while (1)
     if ($type -eq '1')
     {
         $major += 1
+        $minor = 0
+        $bug = 0
         break
     }
     elseif ($type -eq '2')
     {
         $minor += 1
+        $bug = 0
         break
     }
     elseif ($type -eq '3' -or $type -eq '')

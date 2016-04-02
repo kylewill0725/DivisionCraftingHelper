@@ -2,3 +2,4 @@ bin/*
 .git/*
 *.bak
 build/*
+source/log.*
