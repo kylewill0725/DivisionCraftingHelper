@@ -35,7 +35,7 @@ Main Screen
 Confirmation Screen
 
 [](#Usage)
-### **Usage**
+<h3 id="Usage"><b>Usage</b></h3>
 
 To start, go to the crafting station and navigate to the Material Conversion tab (the last one).
 
