@@ -17,25 +17,25 @@ Current features include:
 1.1.0 beta
 
 ### **Screenshots**
-![](http://imgur.com/KMcvbO5)
+![](http://imgur.com/KMcvbO5.png)
 Main Screen
 
-![](http://imgur.com/a1aQfIZ)
+![](http://imgur.com/a1aQfIZ.png)
 Confirmation Screen
 
 ### **Usage**
 
 To start, go to the crafting station and navigate to the Material Conversion tab (the last one).
 
-![](http://imgur.com/KpFRWtG)
+![](http://imgur.com/KpFRWtG.png)
 
 Next, open the program and fill in the text boxes with the related materials. There are tabs above the textboxes in order to change between High End (Gold), Rare (Blue), and Division Tech (DZ).
 
-![](http://imgur.com/ygrArs4)
+![](http://imgur.com/ygrArs4.png)
 
 Finally, ensure that The Division looks like the first picture, such that the High End Weapon Parts are selected (as shown by the extended bar). With that done, you are ready to press "Craft". A dialog will appear confirming your choices and showing you the number of materials to be crafted. Below the materials is the aproxamate time taken to finish crafting.
 
-![](http://imgur.com/TABjHry)
+![](http://imgur.com/TABjHry.png)
 
 Assuming this is correct, press ok and reselect The Division's window. After three seconds, the program will start crafting.
 
