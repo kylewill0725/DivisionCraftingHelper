@@ -1,6 +1,6 @@
 # The Division Crafting Helper
 
- ###[Latest Release](https://github.com/kylewill0725/DivisionCraftingHelper/releases/latest)
+ ### [Latest Release](https://github.com/kylewill0725/DivisionCraftingHelper/releases/latest)
 
 The Division Crafting Helper is a program written in Autohotkey that sends keyboard commands to The Divsion in order to automatically upgrade your materials to High End. So take a break, and let this program upgrade those materials.
 
