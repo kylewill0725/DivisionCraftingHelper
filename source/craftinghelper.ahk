@@ -1,8 +1,6 @@
 ﻿#SingleInstance force
 FileInstall, pic.png, %A_AppData%\DivisionCraftingHelper.png
 
-mats := [1, 8, 2, 7, 3, 6, 4, 5, 9, 16, 10, 15, 11, 14, 12, 13]
-
 ;Gui Code Start
 Gui,Add,Button,gCancel x195 y0 w40 h20 Center,Close
 Gui,Add,Button,gHelp x20 y0 w100 h40 Center,Screen Should`rLook Like This
@@ -60,53 +58,79 @@ Gui,Show,w235 h240, Crafting Helper
 WinSet, AlwaysOnTop, On, Crafting Helper
 ;Gui Code End
 
-
+;Is the function crafting?
 vCrafting := 0
+
+;Material declarations
+;Naming format: object Color Type (oGoldWeaponParts)
+oGWP := new Material("Gold Weapon Parts", GWPHD, "GWP", 1, 0)
+oGTL := new Material("Gold Tools", GTLHD, "GTL", 2, 0)
+oGEL := new Material("Gold Electronics", GELHD, "GEL", 3, 0)
+oGFB := new Material("Gold Fabric", GFBHD, "GFB", 4, 0)
+
+oGWPDZ := new Material("Gold Weapon Parts (DZ)", GWPDZHD, "GWPDZ", 8, 1)
+oGTLDZ := new Material("Gold Tools (DZ)", GTLDZHD, "GTLDZ", 7, 1)
+oGELDZ := new Material("Gold Electronics (DZ)", GELDZHD, "GELDZ", 6, 1)
+oGFBDZ := new Material("Gold Fabric (DZ)", GFBDZHD, "GFBDZ", 5, 1)
+
+oBWP := new Material("Blue Weapon Parts", BWPHD, "BWP", 9, 0)
+oBTL := new Material("Blue Tools", BTLHD, "BTL", 10, 0)
+oBEL := new Material("Blue Electronics", BELHD, "BEL", 11, 0)
+oBFB := new Material("Blue Fabric", BFBHD, "BFB", 12, 0)
+
+oBWPDZ := new Material("Blue Weapon Parts (DZ)", BWPDZHD, "BWPDZ", 16, 1)
+oBTLDZ := new Material("Blue Tools (DZ)", BTLDZHD, "BTLDZ", 15, 1)
+oBELDZ := new Material("Blue Electronics (DZ)", BELDZHD, "BELDZ", 14, 1)
+oBFBDZ := new Material("Blue Fabric (DZ)", BFBDZHD, "BFBDZ", 13, 1)
+
+mats := [oGWP, oGTL, oGEL, oGFB, oGWPDZ, oGTLDZ, oGELDZ, oGFBDZ, oBWP, oBTL, oBEL, oBFB, oBWPDZ, oBTLDZ, oBELDZ, oBFBDZ]
 
 Craft:
 	vCrafting := 1
-	selected := mats[1]
+	;Currently selected slot
+	selected := mats[1].slot
+	;Used to update textbox variables
 	Gui, Submit, NoHide
-	inpt := [GWP, GDZWP, GTL, GDZTL, GEL, GDZEL, GFB, GDZFB, BWP, BDZWP, BTL, BDZTL, BEL, BDZEL, BFB, BDZFB]
-	matStr := ["Gold Weapon Parts", "Gold Weapon Parts (DZ)", "Gold Tools", "Gold Tools (DZ)", "Gold Electronics", "Gold Electronics (DZ)", "Gold Fabric", "Gold Fabric (DZ)", "Blue Weapon Parts", "Blue Weapon Parts (DZ)", "Blue Tools", "Blue Tools (DZ)", "Blue Electronics", "Blue Electronics (DZ)", "Blue Fabric", "Blue Fabric (DZ)"]
-	craftCnt := [0]
 	confirmStr := ""
+	loadedSlots := Object()
 	totalCrafts := 0
 	hasItems := 0
 	
-	for k, v in inpt
+	for k, v in mats
 	{
-		if (v)
+		temp := % v.var
+		cnt := % %temp%
+		if (cnt)
 		{
 			hasItems := 1
-			totalCrafts += craftCnt[k] := Floor(Mod(k, 2) ? v/5 : v/2)
-			confirmStr := append(confirmStr, Format("{1:s}: {2:i}`r", matStr[k], craftCnt[k]))
 			
+			totalCrafts += v.isDZ ? cnt//2 : cnt//5
+			loadedSlots[k] := v
+			confirmStr := append(confirmStr, Format("{1:s}: {2:i}`r", v.name, v.GetCount()))			
 		}
 	}
 	if !(hasItems)
 		return
 	
-	
 	confirmStr := append(confirmStr, "Estimated Time: " . Floor(totalCrafts*(1401/60000)) . " Minutes and " . Floor(totalCrafts*(1401/1000) - Floor((totalCrafts)*(1401/60000))*60) . " Seconds")
-	;MsgBox,% 4097,, %confirmStr%
-	;IfMsgBox Cancel
-		;return
+	MsgBox,% 4097,, %confirmStr%
+	IfMsgBox Cancel
+		return
   
 	Sleep 3000
-	;While not WinActive("ahk_exe TheDivision.exe")
-		;Sleep 3000
+	While not WinActive("ahk_exe TheDivision.exe")
+		Sleep 3000
 	if not vCrafting
 			return
 	
-	for k, v in craftCnt
+	for k, v in loadedSlots
 	{
-		GuiControl, , Stat,% matStr[k]
-		JumpTo(mats[k])
-		CraftIt(v)
+		GuiControl, , Stat, % v.name
+		JumpTo(v.slot)
+		CraftIt(v.GetCount())
 	}
 	GuiControl, , Stat,
-	JumpTo(mats[1])
+	JumpTo(mats[1].slot)
 	vCrafting := 0
 return
 
@@ -114,26 +138,24 @@ CraftIt(cnt)
 {
 	global
 	
-	ctrls := { 1: GWPHD, 8: GDZWPHD, 2: GTLHD, 4: GDZTLHD, 3: GELHD, 6: GDZELHD, 4: GFBHD, 5: GDZFBHD, 9: BWPHD, 16: BDZWPHD, 10: BTLHD, 15: BDZTLHD, 11: BELHD, 14: BDZELHD, 12: BFBHD, 13: BDZFBHD }
-	vals := { 1: GWP, 8: GDZWP, 2: GTL, 4: GDZTL, 3: GEL, 6: GDZEL, 4: GFB, 8: GDZFB, 9: BWP, 16: BDZWP, 10: BTL, 15: BDZTL, 11: BEL, 14: BDZEL, 12: BFB, BDZFB }
-	
 	Loop %cnt%
 	{
-		;While not WinActive("ahk_exe TheDivision.exe")
-			;Sleep 1000
+		While not WinActive("ahk_exe TheDivision.exe")
+			Sleep 1000
 		if not vCrafting 
 			return
 		
 		Sleep 1
-		;Send {SPACE Down}
+		Send {SPACE Down}
 		Sleep 500
-		GuiControl, , % ctrls[selected], % vals[selected] - (Mod(selected, 2) ? 5 : 2) == 0 ? emptyString : vals[selected] - (Mod(selected, 2) ? 5 : 2)
-		vals[selected] -= (Mod(selected, 2) ? 5 : 2)
-		;Send {SPACE Up}
+		temp := mats[selected].var
+		%temp% -= (mats[selected].isDZ ? 2 : 5)
+		GuiControl, , % mats[selected].hwid, % %temp% ? %temp% : emptyString
+		Send {SPACE Up}
   		Sleep 800
-		;Send {ESC Down}
+		Send {ESC Down}
 		Sleep 100
-		;Send {Esc Up}
+		Send {Esc Up}
 		
 	}
 }
@@ -155,15 +177,15 @@ Up(cnt)
 	 
 	Loop %cnt%
 	{
-		;While not WinActive("ahk_exe TheDivision.exe")
-			;Sleep 1000
+		While not WinActive("ahk_exe TheDivision.exe")
+			Sleep 1000
 		if not vCrafting
 			return
 		
-		;Send, {Up Down}
+		Send, {Up Down}
 		Sleep, 1
 		selected--
-		;Send, {Up Up}
+		Send, {Up Up}
 		Sleep, 1		
 	}
 }
@@ -175,15 +197,15 @@ Down(cnt)
 	
 	Loop %cnt%
 	{
-		;While not WinActive("ahk_exe TheDivision.exe")
-			;Sleep 1000
+		While not WinActive("ahk_exe TheDivision.exe")
+			Sleep 1000
 		if not vCrafting
 			return
 		
-		;Send, {Down Down}
+		Send, {Down Down}
 		Sleep, 1
 		selected++
-		;Send, {Down Up}
+		Send, {Down Up}
 		Sleep, 1
 	}
 }
@@ -259,7 +281,22 @@ append(str1, str2)
 	return str1 . str2
 }
 
-class material 
-{
+class Material {
 	
+	__New(parName, parHWID, parVar, parSlot, varIsDZ)
+	{
+		this.name := parName
+		this.hwid := parHWID
+		this.var := parVar
+		this.slot := parSlot
+		this.isDZ := varIsDZ
+	}
+	
+	GetCount()
+	{
+		temp := this.var
+		baseCnt := % %temp%
+		return this.isDZ ? baseCnt//2 : baseCnt//5
+	}
+
 }
