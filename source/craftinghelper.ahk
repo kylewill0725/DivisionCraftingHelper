@@ -1,6 +1,6 @@
 #SingleInstance force
 
-currentVersion := "1-0-1"
+currentVersion := "1-1-0"
 
 checkVersion()
 
@@ -70,25 +70,25 @@ vCrafting := 0
 
 ;Material declarations
 ;Naming format: object Color Type (oGoldWeaponParts)
-oGWP := new Material("Gold Weapon Parts", GWPHD, "GWP", 1, 0)
-oGTL := new Material("Gold Tools", GTLHD, "GTL", 2, 0)
-oGEL := new Material("Gold Electronics", GELHD, "GEL", 3, 0)
-oGFB := new Material("Gold Fabric", GFBHD, "GFB", 4, 0)
+oGWP := new Material("Gold Weapon Parts", GWPHD, "GWP", 1, 15)
+oGTL := new Material("Gold Tools", GTLHD, "GTL", 2, 15)
+oGEL := new Material("Gold Electronics", GELHD, "GEL", 3, 15)
+oGFB := new Material("Gold Fabric", GFBHD, "GFB", 4, 15)
 
-oGWPDZ := new Material("Gold Weapon Parts (DZ)", GWPDZHD, "GWPDZ", 8, 1)
-oGTLDZ := new Material("Gold Tools (DZ)", GTLDZHD, "GTLDZ", 7, 1)
-oGELDZ := new Material("Gold Electronics (DZ)", GELDZHD, "GELDZ", 6, 1)
-oGFBDZ := new Material("Gold Fabric (DZ)", GFBDZHD, "GFBDZ", 5, 1)
+oGWPDZ := new Material("Gold Weapon Parts (DZ)", GWPDZHD, "GWPDZ", 8, 5)
+oGTLDZ := new Material("Gold Tools (DZ)", GTLDZHD, "GTLDZ", 7, 5)
+oGELDZ := new Material("Gold Electronics (DZ)", GELDZHD, "GELDZ", 6, 5)
+oGFBDZ := new Material("Gold Fabric (DZ)", GFBDZHD, "GFBDZ", 5, 5)
 
-oBWP := new Material("Blue Weapon Parts", BWPHD, "BWP", 9, 0)
-oBTL := new Material("Blue Tools", BTLHD, "BTL", 10, 0)
-oBEL := new Material("Blue Electronics", BELHD, "BEL", 11, 0)
-oBFB := new Material("Blue Fabric", BFBHD, "BFB", 12, 0)
+oBWP := new Material("Blue Weapon Parts", BWPHD, "BWP", 9, 10)
+oBTL := new Material("Blue Tools", BTLHD, "BTL", 10, 10)
+oBEL := new Material("Blue Electronics", BELHD, "BEL", 11, 10)
+oBFB := new Material("Blue Fabric", BFBHD, "BFB", 12, 10)
 
-oBWPDZ := new Material("Blue Weapon Parts (DZ)", BWPDZHD, "BWPDZ", 16, 1)
-oBTLDZ := new Material("Blue Tools (DZ)", BTLDZHD, "BTLDZ", 15, 1)
-oBELDZ := new Material("Blue Electronics (DZ)", BELDZHD, "BELDZ", 14, 1)
-oBFBDZ := new Material("Blue Fabric (DZ)", BFBDZHD, "BFBDZ", 13, 1)
+oBWPDZ := new Material("Blue Weapon Parts (DZ)", BWPDZHD, "BWPDZ", 16, 5)
+oBTLDZ := new Material("Blue Tools (DZ)", BTLDZHD, "BTLDZ", 15, 5)
+oBELDZ := new Material("Blue Electronics (DZ)", BELDZHD, "BELDZ", 14, 5)
+oBFBDZ := new Material("Blue Fabric (DZ)", BFBDZHD, "BFBDZ", 13, 5)
 
 mats := [oGWP, oGTL, oGEL, oGFB, oGFBDZ, oGELDZ, oGTLDZ, oGWPDZ, oBWP, oBTL, oBEL, oBFB, oBFBDZ, oBELDZ, oBTLDZ, oBWPDZ]
 
@@ -179,7 +179,7 @@ CraftIt(cnt)
 		Send {SPACE Down}
 		Sleep 500
 		temp := mats[selected].var
-		%temp% -= (mats[selected].isDZ ? 2 : 5)
+		%temp% -= mats[selected].cost
 		sLog("Crafted. New count: " . %temp%)
 		GuiControl, , % mats[selected].hwid, % %temp% ? %temp% : emptyString
 		Send {SPACE Up}
@@ -386,25 +386,41 @@ sLog(str)
 
 checkVersion() 
 {
+	global currentVersion
 	
+	web := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+	web.Open("GET", "https://raw.githubusercontent.com/kylewill0725/DivisionCraftingHelper/master/version", true)
+	web.Send()
+	web.WaitForResponse()
+	response := web.ResponseText
+	StringReplace, response, response, `n,,A
+	if (response != currentVersion := "1-1-0"
+	{
+		MsgBox,4,, "An update is available for this software. Would you like to update?"
+		IfMsgBox, Yes
+		{
+			run, https://github.com/kylewill0725/DivisionCraftingHelper
+			ExitApp
+		}
+	}
 }
 
 class Material {
 	
-	__New(parName, parHWID, parVar, parSlot, varIsDZ)
+	__New(parName, parHWID, parVar, parSlot, varCost)
 	{
 		this.name := parName
 		this.hwid := parHWID
 		this.var := parVar
 		this.slot := parSlot
-		this.isDZ := varIsDZ
+		this.cost := varCost
 	}
 	
 	GetCount()
 	{
 		temp := this.var
 		baseCnt := % %temp%
-		return this.isDZ ? baseCnt//2 : baseCnt//5
+		return baseCnt//this.cost
 	}
 
 }

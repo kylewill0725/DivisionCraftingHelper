@@ -16,12 +16,17 @@ Current features include:
   - Estimated time required
   - Confirmation box
   - Text boxes automatically count down while crafting
-  - Current status on the bottom of window
+  - Current status on the bottom of windowv
+  - Update notification
 
 **Note: This is still in developement.** If it takes away items that it was not supposed to, submit a ticket containing the number of each material you were crafting (as close to exact as possible) and I will attempt to fix it as soon as possible.
 
 <h3 id="Version"><b>Version</b></h3>
-1.1.0 beta
+1.1.0
+
+New Features:
+- Updated crafting costs to The Division 1.1.0
+- Added an update notification (beta)
 
 <h3 id="Screenshots"><b>Screenshots</b></h3>
 ![](http://imgur.com/KMcvbO5.png)
