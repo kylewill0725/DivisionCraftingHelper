@@ -1,4 +1,10 @@
-﻿#SingleInstance force
+#SingleInstance force
+
+currentVersion := "1-0-1"
+
+checkVersion()
+
+FileDelete, log.txt
 
 ;Gui Code Start
 Gui, Main:Default
@@ -376,6 +382,11 @@ sLog(str)
 {
 	FormatTime, now, A_Now, yy-MM-dd hh:mm:ss
 	FileAppend,% now . ":" . str . "`n", log.txt
+}
+
+checkVersion() 
+{
+	
 }
 
 class Material {

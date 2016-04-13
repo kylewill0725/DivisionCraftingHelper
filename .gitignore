@@ -3,3 +3,8 @@ bin/*
 *.bak
 build/*
 source/log.*
+source/test.*
+.vs/*
+obj/*
+DivisionCraftingHelper.pssproj
+DivisionCraftingHelper.sln
