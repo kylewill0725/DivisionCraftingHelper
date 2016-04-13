@@ -58,7 +58,7 @@ while (1)
 $input = ".\Source\craftinghelper.ahk"
 
 (Get-Content $input) | ForEach-Object {
-    $_ -replace 'currentVersion.+', "currentVersion := `"$major-$minor-$bug`""
+    $_ -replace '^currentVersion.+', "currentVersion := `"$major-$minor-$bug`""
 } | Set-Content $input
 
 $output = ".\build\divisioncraftinghelper_$major-$minor-$bug.exe"
