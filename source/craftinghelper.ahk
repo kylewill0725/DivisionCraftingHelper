@@ -1,6 +1,6 @@
 #SingleInstance force
 
-currentVersion := "1-1-0"
+currentVersion := "1-1-1"
 
 checkVersion()
 
@@ -394,7 +394,7 @@ checkVersion()
 	web.WaitForResponse()
 	response := web.ResponseText
 	StringReplace, response, response, `n,,A
-	if (response != currentVersion := "1-1-0"
+	if (response != currentVersion)
 	{
 		MsgBox,4,, "An update is available for this software. Would you like to update?"
 		IfMsgBox, Yes
