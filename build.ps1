@@ -5,11 +5,11 @@ cd $PSScriptRoot
 [int]$bug = 0
 
 Get-ChildItem .\build -Filter *.exe | ForEach-Object {
-	$_ -match '(?<=_)[^\-]*(?=-.*-.*.exe)'
+	$_ -match '(?<=_)[^\-]*(?=-.*-.*.exe)' > $null
 	$tempMajor = $matches[0] -as [int]
-	$_ -match '(?<=-)[^\-]*(?=-.*.exe)'
+	$_ -match '(?<=-)[^\-]*(?=-.*.exe)' > $null
 	$tempMinor = $matches[0] -as [int]
-	$_ -match '(?<=-)[^\-]*(?=.exe)'
+	$_ -match '(?<=-)[^\-]*(?=.exe)' > $null
 	$tempBug = $matches[0] -as [int]
 
 	if ($tempMajor -gt $major) {
@@ -58,7 +58,7 @@ while (1)
 $input = ".\Source\craftinghelper.ahk"
 
 (Get-Content $input) | ForEach-Object {
-    $_ -replace 'currentVersion.+', "currentVersion := `"$major-$minor-$bug`""
+    $_ -replace '^currentVersion.+', "currentVersion := `"$major-$minor-$bug`""
 } | Set-Content $input
 
 $output = ".\build\divisioncraftinghelper_$major-$minor-$bug.exe"
